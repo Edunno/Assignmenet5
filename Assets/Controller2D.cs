@@ -18,10 +18,13 @@ public class Controller2D : MonoBehaviour
     void Update()
     {
         float hMove = Mathf.Abs(Input.GetAxisRaw("Horizontal"));
-        if(Input.GetKeyDown(KeyCode.W) && IsGrounded()){
+        foreach(Touch touch in Input.touches)
+        {
+        if((touch.phase == TouchPhase.Began) && IsGrounded()){
             Vector2 v = new Vector2(0,jumpForce);
             this.GetComponent<Rigidbody2D>().AddForce(v);
             jumpForce = 250;
+        }
         }
         if(Input.GetKey(KeyCode.D)&& IsGrounded()){
             Vector2 v = new Vector2(2,this.GetComponent<Rigidbody2D>().velocity.y);
