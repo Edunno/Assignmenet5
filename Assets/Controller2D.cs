@@ -20,22 +20,23 @@ public class Controller2D : MonoBehaviour
         float hMove = Mathf.Abs(Input.GetAxisRaw("Horizontal"));
         foreach(Touch touch in Input.touches)
         {
-        if((touch.phase == TouchPhase.Began) && IsGrounded()){
+        if((touch.phase == TouchPhase.Began) && IsGrounded() && (touch.position.x > 1000) && (touch.position.x < 2000)){ //Screen.resolutions[0].width-(Screen.resolutions[0].width/4)
             Vector2 v = new Vector2(0,jumpForce);
             this.GetComponent<Rigidbody2D>().AddForce(v);
             jumpForce = 250;
         }
-        }
-        if(Input.GetKey(KeyCode.D)&& IsGrounded()){
+        if( IsGrounded() && (touch.position.x > 2000)){
             Vector2 v = new Vector2(2,this.GetComponent<Rigidbody2D>().velocity.y);
             this.GetComponent<Rigidbody2D>().velocity = v;
             GetComponent<SpriteRenderer>().flipX = true;
         }
-        if(Input.GetKey(KeyCode.A)&& IsGrounded()){
+        if( IsGrounded() && (touch.position.x < 1000)){
             Vector2 v = new Vector2(-2,this.GetComponent<Rigidbody2D>().velocity.y);
             this.GetComponent<Rigidbody2D>().velocity = v;
             GetComponent<SpriteRenderer>().flipX = false;
         }
+        }
+        
         anim.SetFloat("Speed",hMove);
         if(GetComponent<Rigidbody2D>().velocity.y > 0.2){
             anim.SetBool("IsJumping",true);
